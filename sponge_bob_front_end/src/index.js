@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     //required variables
     const minGap = 200;
-    const maxGap = 500;
+    const maxGap = 300;
+    const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif']
+    
     let myObstacles = [];
 
 
@@ -15,11 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return runnerGame.frame % n === 0
     }
 
+    //choose a randome sprite
+    const randomSprite = () => {
+        let i = Math.floor(Math.random() * (obstacleSprites.length));
+        return obstacleSprites[i]
+    }
+
+    //randomGap
     const randomGap = () => {
         return Math.floor(minGap + Math.random() * (maxGap - minGap + 1));
     }
 
-    // This is where the game is played!
     const runnerGame = {
         // load the canvas
         canvas: document.querySelector('canvas'),
@@ -39,12 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 myObstacles.push(new Obstacle())
                 runnerGame.frame = 0;
             }
-
+    
             for(let obstacle of myObstacles){
                 obstacle.x -= 1;
                 obstacle.create();
+    
             }
-
+    
             runnerGame.frame++;
         },
         //clears the sprites in the game area
@@ -52,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
             this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
         },
         stop: function(){
-
+    
         }
-
+    
     }
 
     //obstacle class 
@@ -64,18 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
             this.width = 50;
             this.x = 1200 - this.width;
             this.y = 800 - this.height;
+            this.i = Math.floor(Math.random() * (obstacleSprites.length));
         }
-
+    
         create(){
            let image = new Image()
-           image.src= 'assets/images/jellyfish.gif'
+           image.src = obstacleSprites[this.i]
            runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height )
         }
     }
 
 
+
     //invoke to start the game 
 
     startGame()
-
 })
