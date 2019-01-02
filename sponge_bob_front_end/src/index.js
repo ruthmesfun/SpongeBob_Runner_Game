@@ -28,12 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.floor(minGap + Math.random() * (maxGap - minGap + 1));
     }
 
+    //Loads the game area
+
     const runnerGame = {
         // load the canvas
         canvas: document.querySelector('canvas'),
         start: function(){
-            this.canvas.height = 800;
-            this.canvas.width = 1200;
+            this.canvas.height = 400;
+            this.canvas.width = 600;
             this.context = this.canvas.getContext('2d')
             //counts how many times we run the update function
             this.frame = 0
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 obstacle.create();
     
             }
-    
+            player.create();
             runnerGame.frame++;
         },
         //clears the sprites in the game area
@@ -66,13 +68,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     }
 
+    //Player 
+
+    const player = {
+        height: 70,
+        width: 70,
+        x: 0,
+        y: 330, //very confused with this
+        speedY: 0,
+        create: function(){
+            let image = new Image()
+            image.src = 'assets/images/spongebob.gif'
+            runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height)
+        }
+
+    }
+
     //obstacle class 
     class Obstacle{
         constructor(){
             this.height = 50;
             this.width = 50;
-            this.x = 1200 - this.width;
-            this.y = 800 - this.height;
+            this.x = runnerGame.canvas.width - this.width;
+            this.y = runnerGame.canvas.height - this.height;
             this.i = Math.floor(Math.random() * (obstacleSprites.length));
         }
     
