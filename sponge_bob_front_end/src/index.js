@@ -2,10 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     //required variables
     const minGap = 150;
     const maxGap = 300;
-    const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif']
+    const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif'];
+
     
     //obstacle array
     let myObstacles = [];
+
+    let jump_frame = 0
+    
+    //player_frames 
+
+    const playerJumpingFrame = ['assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-4.png', 
+    'assets/images/sponge_bob_moving/moving_spongebob-4.png', 'assets/images/sponge_bob_moving/moving_spongebob-4.png', 'assets/images/sponge_bob_moving/moving_spongebob-5.png', 'assets/images/sponge_bob_moving/moving_spongebob-5.png', 'assets/images/sponge_bob_moving/moving_spongebob-5.png', 'assets/images/sponge_bob_moving/moving_spongebob-6.png', 'assets/images/sponge_bob_moving/moving_spongebob-6.png', 'assets/images/sponge_bob_moving/moving_spongebob-6.png', 'assets/images/sponge_bob_moving/moving_spongebob-7.png', 'assets/images/sponge_bob_moving/moving_spongebob-7.png', 'assets/images/sponge_bob_moving/moving_spongebob-7.png', 'assets/images/sponge_bob_moving/moving_spongebob-8.png', 'assets/images/sponge_bob_moving/moving_spongebob-8.png', 'assets/images/sponge_bob_moving/moving_spongebob-8.png', 'assets/images/sponge_bob_moving/moving_spongebob-9.png', 'assets/images/sponge_bob_moving/moving_spongebob-9.png', 'assets/images/sponge_bob_moving/moving_spongebob-9.png']
+
 
 
     //check each interval of time has passed (150ms) 
@@ -57,10 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
             this.frame = 0
             this.score = 0
             score.update("Score: 0")
-            this.interval = setInterval(this.update, 5)
+            this.interval = setInterval(this.update, 8)
             document.addEventListener('keydown', (event) => {
-                if(event.which === 32){
-                    player.speedY = -2;
+                if(!event.repeat){
+                    if(event.which === 32){
+                        player.speedY = -2;
+                    }
                 }
             });
         },
@@ -134,11 +145,19 @@ document.addEventListener('DOMContentLoaded', () => {
         speedY: 0,
         create: function(){
             let image = new Image()
-            image.src = 'assets/images/spongebob.gif'
+            image.src = playerJumpingFrame[jump_frame]
             runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height)
+
+
+            if(jump_frame === 30){
+                jump_frame = 0
+            }
+            else{
+                jump_frame++
+            }
         },
         newPosition: function(){
-            if (this.y === 150){
+            if (this.y === 180){
                 this.speedY = 2;
             }
             this.y = this.y + this.speedY
@@ -165,7 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
         create(){
            let image = new Image()
            image.src = obstacleSprites[this.i]
-           runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height )
+    
+           setTimeout(runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height ),5)
+
         }
     }
 
