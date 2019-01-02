@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // load the canvas
         canvas: document.querySelector('canvas'),
         start: function(){
+            this.gameOver = false;
             this.canvas.height = 400;
             this.canvas.width = 600;
             this.context = this.canvas.getContext('2d')
@@ -61,14 +62,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(event.which === 32){
                     player.speedY = -2;
                 }
-            })
+            });
         },
         //update the sprites in our game area
         update: function(){
             for(let obstacle of myObstacles){
                 if(player.collide(obstacle)){
-                    runnerGame.stop()
+                    runnerGame.gameOver = true;
                 }
+            }
+
+            if(runnerGame.gameOver){
+               runnerGame.canvas.display = 'none' 
+               let you_lost = document.createElement('div')
+               let lost = document.createElement('h1')
+               let dying_spongebob_pic = document.createElement('img')
+               let plankton = document.createElement('img')
+                
+               
+               dying_spongebob_pic.src = 'assets/images/you_lost.gif'
+               dying_spongebob_pic.id = 'you_lost'
+
+               plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
+               plankton.id = 'you_lost'
+
+               lost.innerHTML = "YOU LOST!"
+
+               you_lost.appendChild(lost)
+               you_lost.appendChild(dying_spongebob_pic)
+               you_lost.appendChild(plankton)
+
+               document.body.insertBefore(you_lost,document.body.childNodes[0])
+               runnerGame.stop()
             }
             runnerGame.clear();
             // Creates sprite if passed 150 ms
@@ -122,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         collide:function(obs){
-            return this.x + this.width > obs.x + 30 && this.x < obs.x + obs.width - 30 && this.y + this.height > obs.y 
+            return this.x + this.width > obs.x + 35 && this.x < obs.x + obs.width - 35 && this.y + this.height > obs.y +10
         }
 
     }

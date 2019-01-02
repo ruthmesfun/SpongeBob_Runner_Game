@@ -3,3 +3,8 @@ canvas {
     background-color: lightblue;
     background: url('assets/images/setting.jpg')
 }
+
+.you_lost{
+    width: 70px;
+    height: 70px;
+}
