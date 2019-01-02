@@ -1,16 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     //required variables
-    const minGap = 200;
+    const minGap = 150;
     const maxGap = 300;
     const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif']
     
+    //obstacle array
     let myObstacles = [];
 
-
-    //Start the game
-    const startGame = () => {
-        runnerGame.start()
-    }
 
     //check each interval of time has passed (150ms) 
     const eachInterval = (n) => {
@@ -28,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.floor(minGap + Math.random() * (maxGap - minGap + 1));
     }
 
+    //score
     const score = {
         x: 400,
         y: 50,
@@ -36,6 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
             runnerGame.context.font = '30px Slackey';
             runnerGame.context.fillText(text,this.x,this.y)
         }
+    }
+
+    //Text
+
+    const text = (text, font_size, x, y) => {
+        runnerGame.context.fillStyle = '#FFF56C';
+        runnerGame.context.font = `${font_size} Slackey`;
+        runnerGame.context.fillText(text,x,y)
     }
 
     //Loads the game area
@@ -143,5 +148,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //invoke to start the game 
 
-    startGame()
+    runnerGame.start()
 })
