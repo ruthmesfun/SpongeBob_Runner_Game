@@ -67,13 +67,22 @@ li a:hover {
 background-color:orange;
 color:white;
 }
-/* #button{
-  background:purple;
+#button{
+  background:#0457A0;
   color:white;
-  border-radius: 10px;
   font-size: 15px;
-  width:100px;
-} */
+  width:150px;
+  border-color: white;
+  padding: 20px 10px;
+  font-family: Slackey;
+  font-size: 25px;
+
+} 
+
+#button:hover{
+  background:#FFF56C;
+  color: #26B9C8;
+}
 .right{
   float: right;
   margin-right: 30px;
@@ -145,6 +154,7 @@ canvas {
   display: block;
   /* width: 800px; */
   background-size: 600px 400px;
+  display: none;
 }
 
 /* input[type=text] {
