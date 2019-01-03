@@ -116,10 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
                document.body.insertBefore(you_lost,document.body.childNodes[0])
                runnerGame.stop()
 
-
-
-
-
+               button.addEventListener('click', function(event){
+                 if(event.target.id === 'button'){
+                   runnerGame.gameOver = false
+                   you_lost.remove()
+                   runnerGame.start()
+                 }
+               })
 
             }
 
@@ -208,14 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     }
-
-    button.addEventListener('click', function(event){
-      if(event.target.id === 'button'){
-        runnerGame.gameOver = false
-        you_lost.remove()
-        runnerGame.start()
-      }
-    })
 
 
     //invoke to start the game
