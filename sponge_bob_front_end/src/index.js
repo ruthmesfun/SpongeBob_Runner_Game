@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if(runnerGame.gameOver){
-               runnerGame.canvas.display = 'none' 
+               runnerGame.canvas.display = 'none'
 
                let you_lost = document.createElement('div')
                you_lost.id = 'you_lost'

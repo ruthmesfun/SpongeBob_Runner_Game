@@ -10,45 +10,33 @@ canvas {
     display: block;
     width: 800px;
 }
-
-.you_lost{
-    width: 70px;
-    height: 70px;
-}
-
 body {
   background-color: #0457A0;
 }
-
 #you_lost {
   display:inline-block;
   align-items: center;
   display: flex;
   justify-content: center;
 }
-
 .lost_pic{
   width:10%;
   height:10%;
 }
-
 #lost_text{
   color:#FFF56C;
   font-family: Slackey;
   font-size: 50px;
 }
-
 #title{
   color:white;
   background-color: orange;
   font-size: 18px;
   font-style: bold;
 }
-
 .toolbar{
   text-align: center;
 }
-
 ul {
   list-style-type: none;
   margin: 0;
@@ -57,11 +45,9 @@ ul {
   background-color: #C62F24;
   font-family: 'Baloo Bhaina';
 }
-
 li {
   float: left;
 }
-
 li a {
   display: block;
   color: white;
@@ -69,17 +55,14 @@ li a {
   padding: 10px 5px 10px 5px;
   text-decoration: none;
 }
-
 li a:hover {
   background-color: #FFF56C;
   color: #26B9C8;
 }
-
 #title:hover {
 background-color:white;
 color:orange;
 }
-
 #button{
   background:purple;
   color:white;
