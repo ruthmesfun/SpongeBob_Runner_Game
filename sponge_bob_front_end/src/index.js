@@ -85,23 +85,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(runnerGame.gameOver){
                runnerGame.canvas.display = 'none'
+
                let you_lost = document.createElement('div')
                you_lost.id = 'you_lost'
+
                let lost = document.createElement('h1')
                lost.id = "lost_text"
-               let dying_spongebob_pic = document.createElement('img')
+
+
                let plankton = document.createElement('img')
-               dying_spongebob_pic.className = "lost_pic"
                plankton.className = "lost_pic"
+               plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
+
+               let dying_spongebob_pic = document.createElement('img')
+               dying_spongebob_pic.className = "lost_pic"
+               dying_spongebob_pic.src = 'assets/images/you_lost.gif'
+
+
                let button = document.createElement('BUTTON')
                button.innerText = 'Play Again?'
                button.id = "button"
 
-
-               dying_spongebob_pic.src = 'assets/images/you_lost.gif'
-               plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
                lost.innerHTML = "YOU LOST!"
-
 
                you_lost.appendChild(lost)
                you_lost.appendChild(dying_spongebob_pic)
@@ -111,13 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                document.body.insertBefore(you_lost,document.body.childNodes[0])
                runnerGame.stop()
 
-               button.addEventListener('click', function(event){
-                 if(event.target.id === 'button'){
-                   runnerGame.gameOver = false
-                   you_lost.remove()
-                   // runnerGame.start()
-                 }
-               })
+
 
 
 
@@ -209,6 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     }
+
+    button.addEventListener('click', function(event){
+      if(event.target.id === 'button'){
+        runnerGame.gameOver = false
+        you_lost.remove()
+        runnerGame.start()
+      }
+    })
+
 
     //invoke to start the game
 
