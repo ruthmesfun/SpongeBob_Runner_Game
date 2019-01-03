@@ -4,20 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxGap = 300;
     const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif'];
 
-    
+
     //obstacle array
     let myObstacles = [];
 
     let jump_frame = 0
-    
-    //player_frames 
 
-    const playerJumpingFrame = ['assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-4.png', 
+    //player_frames
+
+    const playerJumpingFrame = ['assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-0.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-1.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-2.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-3.png', 'assets/images/sponge_bob_moving/moving_spongebob-4.png',
     'assets/images/sponge_bob_moving/moving_spongebob-4.png', 'assets/images/sponge_bob_moving/moving_spongebob-4.png', 'assets/images/sponge_bob_moving/moving_spongebob-5.png', 'assets/images/sponge_bob_moving/moving_spongebob-5.png', 'assets/images/sponge_bob_moving/moving_spongebob-5.png', 'assets/images/sponge_bob_moving/moving_spongebob-6.png', 'assets/images/sponge_bob_moving/moving_spongebob-6.png', 'assets/images/sponge_bob_moving/moving_spongebob-6.png', 'assets/images/sponge_bob_moving/moving_spongebob-7.png', 'assets/images/sponge_bob_moving/moving_spongebob-7.png', 'assets/images/sponge_bob_moving/moving_spongebob-7.png', 'assets/images/sponge_bob_moving/moving_spongebob-8.png', 'assets/images/sponge_bob_moving/moving_spongebob-8.png', 'assets/images/sponge_bob_moving/moving_spongebob-8.png', 'assets/images/sponge_bob_moving/moving_spongebob-9.png', 'assets/images/sponge_bob_moving/moving_spongebob-9.png', 'assets/images/sponge_bob_moving/moving_spongebob-9.png']
 
 
 
-    //check each interval of time has passed (150ms) 
+    //check each interval of time has passed (150ms)
     const eachInterval = (n) => {
         return runnerGame.frame % n === 0
     }
@@ -84,39 +84,59 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if(runnerGame.gameOver){
-               runnerGame.canvas.display = 'none' 
+               runnerGame.canvas.display = 'none'
                let you_lost = document.createElement('div')
+               you_lost.id = 'you_lost'
                let lost = document.createElement('h1')
+               lost.id = "lost_text"
                let dying_spongebob_pic = document.createElement('img')
                let plankton = document.createElement('img')
-                
-               
+               dying_spongebob_pic.className = "lost_pic"
+               plankton.className = "lost_pic"
+               let button = document.createElement('BUTTON')
+               button.innerText = 'Play Again?'
+               button.id = "button"
+
+
                dying_spongebob_pic.src = 'assets/images/you_lost.gif'
-               dying_spongebob_pic.id = 'you_lost'
-
                plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
-               plankton.id = 'you_lost'
-
                lost.innerHTML = "YOU LOST!"
+
 
                you_lost.appendChild(lost)
                you_lost.appendChild(dying_spongebob_pic)
                you_lost.appendChild(plankton)
+               you_lost.appendChild(button)
 
                document.body.insertBefore(you_lost,document.body.childNodes[0])
                runnerGame.stop()
+
+               button.addEventListener('click', function(event){
+                 if(event.target.id === 'button'){
+                   runnerGame.gameOver = false
+                   you_lost.remove()
+                   // runnerGame.start()
+                 }
+               })
+
+
+
+
             }
+
+
+
             runnerGame.clear();
             // Creates sprite if passed 150 ms
-            if (eachInterval(randomGap())){ 
+            if (eachInterval(randomGap())){
                 myObstacles.push(new Obstacle())
                 runnerGame.frame = 0;
             }
-    
+
             for(let obstacle of myObstacles){
                 obstacle.x -= 1;
                 obstacle.create();
-    
+
             }
             player.newPosition();
             player.create();
@@ -131,10 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
         stop: function(){
             clearInterval(this.interval);
         }
-    
+
     }
 
-    //Player 
+    //Player
 
     const player = {
         height: 70,
@@ -171,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    //obstacle class 
+    //obstacle class
     class Obstacle{
         constructor(){
             this.height = 60;
@@ -180,19 +200,17 @@ document.addEventListener('DOMContentLoaded', () => {
             this.y = runnerGame.canvas.height - this.height;
             this.i = Math.floor(Math.random() * (obstacleSprites.length));
         }
-    
+
         create(){
            let image = new Image()
            image.src = obstacleSprites[this.i]
-    
+
            setTimeout(runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height ),5)
 
         }
     }
 
-
-
-    //invoke to start the game 
+    //invoke to start the game
 
     runnerGame.start()
 })
