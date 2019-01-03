@@ -11,11 +11,18 @@
 </head>
 <body>
         <div id = "you_lost"> 
+            <div>
             <h1 id='lost_text'>You Lost!</h1>
             <img class='lost_pic' src ='assets/images/you_lost.gif'>
             <img class='lost_pic' src='assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'>
-            
+            <form action="/" method="post">
+                <label for="user" class='lost_text'>Type your name:</label>
+                <input type="text" name="userName" id="user_name">
+                <input type="submit" value="Submit">
+            </form>
             <button id='button'> Play Again? </button>
+            </div>
+
         </div>
 
       <ul>
@@ -23,6 +30,7 @@
         <li class="toolbar"><a href="https://www.nick.com/shows/spongebob-squarepants" target="_blank">Shows</a></li>
         <li class="toolbar"><a href="https://www.nick.com/games/" target="_blank" >Other Games</a></li>
         <li class="toolbar"><a href="https://www.nick.com/tv-schedule" target="_blank" >Tv Schedule</a></li>
+        <li class="toolbar right" ><a id ='leaderBoard'>LeaderBoard</a></li>
       </ul>
 
     <script src="src/index.js"></script>

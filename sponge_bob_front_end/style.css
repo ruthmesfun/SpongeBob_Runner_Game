@@ -19,15 +19,24 @@ body {
   display: none;
   justify-content: center;
 }
+
 .lost_pic{
   width:10%;
   height:10%;
 }
+
 #lost_text{
   color:#FFF56C;
   font-family: Slackey;
   font-size: 50px;
 }
+
+.lost_text{
+  color:#FFF56C;
+  font-family: Slackey;
+  font-size: 30px;
+}
+
 #title{
   color:white;
   background-color: orange;
@@ -69,4 +78,8 @@ color:orange;
   border-radius: 10px;
   font-size: 15px;
   width:100px;
+}
+.right{
+  float: right;
+  margin-right: 30px;
 }

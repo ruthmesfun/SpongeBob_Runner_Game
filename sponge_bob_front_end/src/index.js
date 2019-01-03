@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxGap = 300;
     const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif'];
 
+    const usersApi = 'http://localhost:3000/api/v1/users'
+
+    const leaderBoard = document.getElementById('leaderBoard')
+
+
+
 
     //obstacle array
     let myObstacles = [];
@@ -91,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             //    let you_lost = document.createElement('div')
             //    you_lost.id = 'you_lost'
 
-            //    let lost = document.createElement('h1')
-            //    lost.id = "lost_text"
+               let lost = document.querySelector('h1')
+               lost.innerHTML = `You scored ${Math.floor(runnerGame.score)} points!`
 
 
             //    let plankton = document.createElement('img')
@@ -166,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height)
 
 
-            if(jump_frame === 30){
+            if(jump_frame === 29){
                 jump_frame = 0
             }
             else{
@@ -213,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runnerGame.start()
 
     button.addEventListener('click', function(event){
+ 
         if(event.target.id === 'button'){
 
           runnerGame.gameOver = false
@@ -220,7 +227,50 @@ document.addEventListener('DOMContentLoaded', () => {
           runnerGame.clear()
           runnerGame.start()
         }
+
     })
+
+    document.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const userName  = event.target.userName.value
+        const score = Math.floor(runnerGame.score)
+        fetch(usersApi, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            method:'POST',
+            body: JSON.stringify({user_name: userName, score: score})
+        })
+        
+    })
+
+    document.addEventListener('click', (event) => {
+
+        if(event.target === leaderBoard){
+
+            fetch(usersApi)
+            .then(r => r.json())
+            .then((userData) => {
+                
+                document.body.innerHTML =`<table style="width:100%">
+                                            <tr>
+                                            <th>username</th>
+                                            <th>score</th> 
+                                            </tr>
+                                        </table>`
+
+                let table = document.body.querySelector('table')
+                for(let user of userData){
+                    table.innerHTML+= `<tr>
+                                        <th>${user.user_name}</th>
+                                        <th>${user.score}</th>
+                                        </tr>`
+                }
+            })
+        }
+    })
+
 
 
 
