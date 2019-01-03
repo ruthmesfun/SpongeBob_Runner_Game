@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const you_lost = document.getElementById("you_lost")
     const minGap = 150;
     const maxGap = 300;
-    const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif'];
+    const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/garry_500-5.png', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif', 'assets/images/obstacles/krabby_patty.png'];
 
     const usersApi = 'http://localhost:3000/api/v1/users'
 
     const leaderBoard = document.getElementById('leaderBoard')
-
+    const runner_Game = document.getElementById('runner_Game')
 
 
 
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas: document.querySelector('canvas'),
         start: function(){
             myObstacles = []
+            // this.gameOn = false;
             this.gameOver = false;
             this.canvas.height = 400;
             this.canvas.width = 600;
@@ -96,11 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //    let you_lost = document.createElement('div')
             //    you_lost.id = 'you_lost'
-
+                this.gameOn = false;
+                runner_Game.style.display = 'none'
                let lost = document.querySelector('h1')
                lost.innerHTML = `You scored ${Math.floor(runnerGame.score)} points!`
-
-
             //    let plankton = document.createElement('img')
             //    plankton.className = "lost_pic"
             //    plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
@@ -127,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
-
             runnerGame.clear();
             // Creates sprite if passed 150 ms
             if (eachInterval(randomGap())){
@@ -135,11 +134,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 runnerGame.frame = 0;
             }
 
-            for(let obstacle of myObstacles){
-                obstacle.x -= 1;
-                obstacle.create();
 
+            if (runnerGame.score > 30){
+                for(let obstacle of myObstacles){
+                    obstacle.x -= 1.5;
+                    obstacle.create();
+    
+                }
             }
+
+            if (runnerGame.score > 20){
+                for(let obstacle of myObstacles){
+                    obstacle.x -= 1.2;
+                    obstacle.create();
+    
+                }
+            }
+
+            if (runnerGame.score < 20){
+                for(let obstacle of myObstacles){
+                    obstacle.x -= 1;
+                    obstacle.create();
+    
+                }
+            }
+
             player.newPosition();
             player.create();
             runnerGame.frame++;
@@ -209,69 +228,106 @@ document.addEventListener('DOMContentLoaded', () => {
            image.src = obstacleSprites[this.i]
 
            setTimeout(runnerGame.context.drawImage(image, this.x, this.y, this.width, this.height ),5)
-
         }
     }
 
 
     //invoke to start the game
 
-    runnerGame.start()
-
-    button.addEventListener('click', function(event){
+    // button.addEventListener('click', function(event){
  
-        if(event.target.id === 'button'){
+    //     if(event.target.id === 'button'){
 
-          runnerGame.gameOver = false
-          you_lost.remove()
-          runnerGame.clear()
-          runnerGame.start()
+    //       runnerGame.gameOver = false
+    //       you_lost.remove()
+    //       runnerGame.clear()
+    //       runnerGame.start()
+    //     }
+
+    // })
+
+    document.addEventListener('submit', (event) => {
+        event.preventDefault()
+
+        const userName  = event.target.userName.value
+        const score = Math.floor(runnerGame.score)
+
+        if (event.target.userName.value === ''){
+            window.alert("Please add a nickname")
+        }
+        else{
+            fetch(usersApi, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                method:'POST',
+                body: JSON.stringify({user_name: userName, score: score})
+            })
+            you_lost.remove()
+            location.reload()
         }
 
     })
 
-    document.addEventListener('submit', (event) => {
-        event.preventDefault()
-        const userName  = event.target.userName.value
-        const score = Math.floor(runnerGame.score)
-        fetch(usersApi, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            method:'POST',
-            body: JSON.stringify({user_name: userName, score: score})
-        })
-        
-    })
-
     document.addEventListener('click', (event) => {
+        let modal = document.body.querySelector('#myModal')
+        const span = document.body.querySelector('span')
 
         if(event.target === leaderBoard){
+            runnerGame.stop()
 
             fetch(usersApi)
             .then(r => r.json())
             .then((userData) => {
-                
-                document.body.innerHTML =`<table style="width:100%">
-                                            <tr>
-                                            <th>username</th>
-                                            <th>score</th> 
-                                            </tr>
-                                        </table>`
+
+                let sortedUser = []
+
+                let modal = document.body.querySelector('#myModal')
 
                 let table = document.body.querySelector('table')
+
+
                 for(let user of userData){
-                    table.innerHTML+= `<tr>
-                                        <th>${user.user_name}</th>
-                                        <th>${user.score}</th>
-                                        </tr>`
+                    sortedUser.push(user)
                 }
+
+               sortedUser = sortedUser.sort((userA, userB) => userB.score - userA.score).slice(0,10)
+               table.innerHTML = ''
+               table.innerHTML += `<tr>
+                                        <th class="heading">username</th>
+                                        <th class="heading">score</th> 
+                                    </tr>`
+               for(let i = 0; i < sortedUser.length; i++){
+                    if (i === 0 ||  i === 1  || i === 2){
+                        table.innerHTML+= `<tr>
+                        <th class='num_1'>${sortedUser[i].user_name}</th>
+                        <th class='num_1'>${sortedUser[i].score}</th>
+                        </tr>`
+                    }
+                    else{
+                        table.innerHTML+= `<tr>
+                        <th>${sortedUser[i].user_name}</th>
+                        <th>${sortedUser[i].score}</th>
+                        </tr>`
+                    }
+
+
+               }
+
+               modal.style.display = "block";
             })
+
+        }
+
+        if(event.target === span){
+            modal.style.display = "none"
+            runnerGame.start()
         }
     })
 
 
+    runnerGame.start()
 
 
 })
