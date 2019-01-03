@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(runnerGame.gameOver){
                runnerGame.canvas.display = 'none' 
+
                let you_lost = document.createElement('div')
                let lost = document.createElement('h1')
                let dying_spongebob_pic = document.createElement('img')
