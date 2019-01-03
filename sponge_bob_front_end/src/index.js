@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     //required variables
+    const you_lost = document.getElementById("you_lost")
     const minGap = 150;
     const maxGap = 300;
     const obstacleSprites = ['assets/images/obstacles/4b21adf278d1d70.gif', 'assets/images/obstacles/524246e9f66085a32b9cd46aedab9266_w200.gif', 'assets/images/obstacles/20772690_90x90.gif', 'assets/images/obstacles/burglar_balls.gif', 'assets/images/obstacles/giphy.gif', 'assets/images/obstacles/jellyfish.gif', 'assets/images/obstacles/pogoSquidward.gif'];
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // load the canvas
         canvas: document.querySelector('canvas'),
         start: function(){
+            myObstacles = []
             this.gameOver = false;
             this.canvas.height = 400;
             this.canvas.width = 600;
@@ -84,46 +86,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if(runnerGame.gameOver){
-               runnerGame.canvas.display = 'none'
+            //    runnerGame.canvas.display = 'none'
 
-               let you_lost = document.createElement('div')
-               you_lost.id = 'you_lost'
+            //    let you_lost = document.createElement('div')
+            //    you_lost.id = 'you_lost'
 
-               let lost = document.createElement('h1')
-               lost.id = "lost_text"
-
-
-               let plankton = document.createElement('img')
-               plankton.className = "lost_pic"
-               plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
-
-               let dying_spongebob_pic = document.createElement('img')
-               dying_spongebob_pic.className = "lost_pic"
-               dying_spongebob_pic.src = 'assets/images/you_lost.gif'
+            //    let lost = document.createElement('h1')
+            //    lost.id = "lost_text"
 
 
-               let button = document.createElement('BUTTON')
-               button.innerText = 'Play Again?'
-               button.id = "button"
+            //    let plankton = document.createElement('img')
+            //    plankton.className = "lost_pic"
+            //    plankton.src = 'assets/images/-plankton-sticker-spongebob-squarepants-39750396-500-500.gif'
 
-               lost.innerHTML = "YOU LOST!"
+            //    let dying_spongebob_pic = document.createElement('img')
+            //    dying_spongebob_pic.className = "lost_pic"
+            //    dying_spongebob_pic.src = 'assets/images/you_lost.gif'
 
-               you_lost.appendChild(lost)
-               you_lost.appendChild(dying_spongebob_pic)
-               you_lost.appendChild(plankton)
-               you_lost.appendChild(button)
 
-               document.body.insertBefore(you_lost,document.body.childNodes[0])
+            //    let button = document.createElement('BUTTON')
+            //    button.innerText = 'Play Again?'
+            //    button.id = "button"
+
+            //    lost.innerHTML = "YOU LOST!"
+
+            //    you_lost.appendChild(lost)
+            //    you_lost.appendChild(dying_spongebob_pic)
+            //    you_lost.appendChild(plankton)
+            //    you_lost.appendChild(button)
+
+            //    document.body.insertBefore(you_lost,document.body.childNodes[0])
+                you_lost.style.display = 'block'
                runnerGame.stop()
-
-               button.addEventListener('click', function(event){
-                 if(event.target.id === 'button'){
-                   runnerGame.gameOver = false
-                   you_lost.remove()
-                   runnerGame.start()
-                 }
-               })
-
             }
 
 
@@ -153,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stop: function(){
             clearInterval(this.interval);
         }
+
 
     }
 
@@ -216,4 +211,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //invoke to start the game
 
     runnerGame.start()
+
+    button.addEventListener('click', function(event){
+        if(event.target.id === 'button'){
+
+          runnerGame.gameOver = false
+          you_lost.remove()
+          runnerGame.clear()
+          runnerGame.start()
+        }
+    })
+
+
+
 })
