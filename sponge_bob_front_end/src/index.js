@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (runnerGame.score > 30){
                 for(let obstacle of myObstacles){
-                    obstacle.x -= 1.5;
+                    obstacle.x -= 1.4;
                     obstacle.create();
     
                 }
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         newPosition: function(){
-            if (this.y === 180){
+            if (this.y === 190){
                 this.speedY = 2;
             }
             this.y = this.y + this.speedY

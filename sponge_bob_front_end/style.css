@@ -60,8 +60,8 @@ li a {
   line-height: 18px;
 }
 li a:hover {
-  background-color: #FFF56C;
-  color: #26B9C8;
+  background-color: #003E87;
+  color: white;
 }
 #title:hover {
 background-color:orange;
@@ -85,7 +85,7 @@ color:white;
 }
 .right{
   float: right;
-  margin-right: 30px;
+  margin-right: 5%;
 }
 
 /* The Modal (background) */
@@ -185,8 +185,7 @@ input[type=text] {
 }
 
 input[type=submit]{
-  background-color: orange;
-  border: none;
+  background-color: #0457A0;
   color: white;
   font-family: Slackey;
   font-size: 15px;
@@ -194,7 +193,14 @@ input[type=submit]{
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
+  border-color: white;
 }
+
+input[type=submit]:hover{
+  background-color: orange;
+  color: white;
+}
+
 
 #imgTitle{
   width: 15%;
