@@ -11,7 +11,7 @@ Javascript, Ruby on Rails (Rails API backend), HTML, CSS, JSON, GoogleFonts
 ## BackEnd Setup
 
 ### Prerequisites
-To use, clone down this repo and open with your preferred text editor. This project uses Ruby on Rails, so you’ll need to make sure you have both installed (if you don’t, visit this link for instructions: Digital Ocean: Install Ruby and Set Up Local Environment as well as PostgreSQL as the database resource.
+To use, clone down this repo and open with your preferred text editor. This project uses Ruby on Rails, so you’ll need to make sure you have Ruby and Rails installed.
 
 ### Installing
 The project gemfile specifies Ruby 2.3.3, so make sure you have Ruby 2.3.3 or higher. Open terminal and in the root of the project directory run:
